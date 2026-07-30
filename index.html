@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Society Audit Management</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div id="loadingOverlay">
+    <div class="loader"></div>
+    <div id="loadingMessage">Loading Society Data...</div>
+</div>
+
+<div class="wrapper">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h3>Society Audit</h3>
+            <small>Management System</small>
+        </div>
+
+        <ul class="nav flex-column mt-4">
+
+            <li class="nav-item">
+                <a id="menuDashboard" class="nav-link active" href="#">
+                    <i class="bi bi-speedometer2"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-cash-stack"></i>
+                    Transactions
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-graph-up"></i>
+                    Reports
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a  id="menuPending" class="nav-link" href="#">
+                    <i class="bi bi-exclamation-circle"></i>
+                    Pending Dues
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-receipt"></i>
+                    Receipts
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main -->
+    <main class="content">
+
+        <!-- Header -->
+
+        <div class="topbar">
+
+            <div>
+                <h2>Future Exotica Co-operative Housing Society</h2>
+                <p>Audit Dashboard</p>
+            </div>
+
+            <button class="btn btn-primary" id="refreshBtn">
+                <i class="bi bi-arrow-repeat"></i>
+                Refresh Data
+            </button>
+
+        </div>
+
+        <!-- Filters -->
+
+        <div class="card mb-4">
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-3">
+
+                        <label>Month</label>
+
+                        <select class="form-select" id="monthFilter">
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <label>Flat</label>
+
+                        <input
+			    id="flatFilter"
+                            type="text"
+                            class="form-control"
+                            placeholder="Flat Number">
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <label>Category</label>
+
+                        <select id= "categoryFilter" class="form-select">
+
+                            <option>All</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <label>Search</label>
+
+                        <input
+			    id="searchText"
+                            type="text"
+                            class="form-control"
+                            placeholder="Search">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+<div id="dashboardSection">
+
+        <!-- Dashboard Cards -->
+
+        <div class="row">
+
+            <div class="col-lg-3 mb-3">
+
+                <div class="summary-card">
+                    <h6>Current Balance</h6>
+                    <h3 id="currentBalance">₹0</h3>
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 mb-3">
+
+                <div class="summary-card">
+                    <h6>Total Credit</h6>
+                    <h3 id="totalCredit">₹0</h3>
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 mb-3">
+
+                <div class="summary-card">
+                    <h6>Total Debit</h6>
+                    <h3 id="totalDebit">₹0</h3>
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 mb-3">
+
+                <div class="summary-card">
+                    <h6>Pending Flats</h6>
+                    <h3 id="pendingFlats">0</h3>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-3 mb-3">
+
+                <div class="summary-card">
+                    <h6>Expected Maintenance</h6>
+                    <h3 id="expectedMaintenance">₹0</h3>
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 mb-3">
+                <div class="summary-card">
+                    <h6>Maintenance Received</h6>
+                    <h3 id="maintenanceReceived">₹0</h3>
+                </div>
+            </div>
+            <div class="col-lg-3 mb-3">
+                <div class="summary-card">
+                    <h6>Collection Efficiency</h6>
+                    <h3 id="collectionEfficiency">0%</h3>
+                </div>
+            </div>
+	    <div class="col-lg-3 mb-3">
+                <div class="summary-card">
+		    <h6>Outstanding Maintenance</h6>
+    		    <h3 id="outstandingMaintenance">₹0</h3>
+	    </div>
+            </div>
+
+        </div>
+
+        <!-- Transactions -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <strong>Transactions</strong>
+
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover mb-0">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Date</th>
+                        <th>Voucher</th>
+                        <th>Flat</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Credit</th>
+                        <th>Debit</th>
+                        <th>Mode</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="transactionTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+</div>
+<div id="pendingSection" style="display:none;">
+    <div class="card">
+        <div class="card-header">
+            <strong>Pending Maintenance</strong>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table" id="pendingTable">
+                <thead>
+                    <tr>
+                        <th>Flat</th>
+                        <th>Owner</th>
+                        <th>Month</th>
+                        <th>Expected</th>
+                        <th>Paid</th>
+                        <th>Pending</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+        <div class="footer mt-4">
+
+            Version 1.0 |
+            Last Refresh :
+            <span id="lastRefresh">--</span>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- Flat Ledger Modal -->
+
+<div class="modal fade" id="ledgerModal" tabindex="-1">
+
+    <div class="modal-dialog modal-xl">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Flat Ledger
+                </h5>
+
+                <button
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row mb-4">
+
+                    <div class="col-md-3">
+
+                        <div class="summary-card">
+
+                            <h6>Expected</h6>
+
+                            <h3 id="ledgerExpected">₹0</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="summary-card">
+
+                            <h6>Received</h6>
+
+                            <h3 id="ledgerReceived">₹0</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="summary-card">
+
+                            <h6>Outstanding</h6>
+
+                            <h3 id="ledgerOutstanding">₹0</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="summary-card">
+
+                            <h6>Total Payments</h6>
+
+                            <h3 id="ledgerCount">0</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered">
+
+                        <thead>
+
+                        <tr>
+
+                            <th>Date</th>
+                            <th>Month</th>
+                            <th>Voucher</th>
+                            <th>Expected</th>
+                            <th>Paid</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="ledgerTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/datastore.js"></script>
+<script src="js/googleSheet.js"></script>
+<script src="js/calculator.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/transactions.js"></script>
+<script src="js/filter.js"></script>
+<script src="js/loading.js"></script>
+<script src="js/pendingDue.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+
+</html>
