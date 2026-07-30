@@ -4,7 +4,7 @@ const CONFIG = {
 
     SOCIETY_NAME: "ABC Co-operative Housing Society",
 
-    GOOGLE_SHEET_ID: "17a1dUjuKxaBQno3zVaYm8EWxbTNqJj1TBfywEWc8lEA",
+    GOOGLE_SHEET_ID: "1n5WrX_A1mXr_cUHzoGZaZ4rLEXF2676eyCaKRZvVaus",
 
     SHEET_NAME: "Transactions",
 
@@ -12,6 +12,6 @@ const CONFIG = {
 
     CURRENCY: "₹",
 
-    API_URL: "https://script.google.com/macros/s/AKfycbzLbysi6VFqrdo8b1DeFV3KyTMsUsgtpTj26Eo1OPyBwd4ZdtMuD5Fpn22N2zfEupJWJw/exec"
+    API_URL: "https://script.google.com/macros/s/AKfycbxIXJhRbNa_hCf5VDiMWE6njoJsohshpnKW8ORIU2q1PhGuI1_-fkxBndggfx4dKeiZ/exec"
 
 };
