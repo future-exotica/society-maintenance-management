@@ -45,6 +45,12 @@ Filters.apply();
 Navigation.showPending();
 });
 
+document.getElementById("menuTransactions").addEventListener("click",(e)=>{
+    e.preventDefault();
+    Filters.apply();
+    Navigation.showTransactions();
+});
+
 document.getElementById("refreshBtn").addEventListener("click",async()=>{
 
 Loading.show("Refreshing data...");
