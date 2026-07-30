@@ -42,7 +42,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a id="menuTransactions" class="nav-link" href="#">
                     <i class="bi bi-cash-stack"></i>
                     Transactions
                 </a>
@@ -227,47 +227,49 @@
 
         </div>
 
-        <!-- Transactions -->
+</div>
 
-        <div class="card">
+<div id="transactionsSection" style="display:none;">
 
-            <div class="card-header">
+    <div class="card">
 
-                <strong>Transactions</strong>
+        <div class="card-header">
 
-            </div>
-
-            <div class="table-responsive">
-
-                <table class="table table-hover mb-0">
-
-                    <thead>
-
-                    <tr>
-
-                        <th>Date</th>
-                        <th>Voucher</th>
-                        <th>Flat</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Credit</th>
-                        <th>Debit</th>
-                        <th>Mode</th>
-                        <th>Status</th>
-
-                    </tr>
-
-                    </thead>
-
-                    <tbody id="transactionTable">
-
-                    </tbody>
-
-                </table>
-
-            </div>
+            <strong>Transactions</strong>
 
         </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover mb-0">
+
+                <thead>
+
+                <tr>
+
+                    <th>Date</th>
+                    <th>Voucher</th>
+                    <th>Flat</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Credit</th>
+                    <th>Debit</th>
+                    <th>Mode</th>
+                    <th>Status</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody id="transactionTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </div>
 <div id="pendingSection" style="display:none;">
