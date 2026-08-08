@@ -3,11 +3,6 @@ const Filters={
 populate(){
 
 const data=DataStore.getAll();
-
-data.forEach(t=>{
-    console.log("Date:", t.date, "Month:", t.month);
-});
-
 const months=[...new Set(
 data
 .map(t=>String(t.month||"").trim())
