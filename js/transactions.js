@@ -13,9 +13,10 @@ const Transactions = {
         const start = (this.currentPage - 1) * this.pageSize;
         const pageItems = this.data.slice(start, start + this.pageSize);
         let html = "";
-        pageItems.forEach(t => {
+        pageItems.forEach((t, i) => {
+            const globalIndex = start + i;
             html += `
-<tr>
+<tr data-index="${globalIndex}" style="cursor:pointer">
 <td>${t.date}</td>
 <td>${t.voucherNo}</td>
 <td>${t.flatNo}</td>
@@ -27,7 +28,17 @@ const Transactions = {
 <td>${t.status}</td>
 </tr>`;
         });
-        document.getElementById("transactionTable").innerHTML = html;
+        const table = document.getElementById("transactionTable");
+        table.innerHTML = html;
+
+        // attach click handlers to rows to show remarks
+        const self = this;
+        Array.from(table.querySelectorAll('tr[data-index]')).forEach(r => {
+            r.addEventListener('click', () => {
+                const idx = Number(r.getAttribute('data-index'));
+                self.showRemarks(idx);
+            });
+        });
     },
 
     renderPagination() {
@@ -59,5 +70,22 @@ const Transactions = {
                 }
             });
         });
+    },
+
+    showRemarks(index) {
+        const t = this.data[index];
+        if (!t) return;
+        document.getElementById('transactionModalTitle').textContent = `Remarks - ${t.voucherNo || ''}`;
+        document.getElementById('txnDate').textContent = t.date || '';
+        document.getElementById('txnVoucher').textContent = t.voucherNo || '';
+        document.getElementById('txnFlat').textContent = t.flatNo || '';
+        document.getElementById('txnType').textContent = t.transactionType || '';
+        document.getElementById('txnRemarks').textContent = t.remarks || '(No remarks)';
+
+        const modalEl = document.getElementById('transactionModal');
+        if (modalEl) {
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        }
     }
 };
