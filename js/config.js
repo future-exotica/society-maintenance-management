@@ -2,7 +2,7 @@ const CONFIG = {
 
     VERSION: "1.0",
 
-    SOCIETY_NAME: "ABC Co-operative Housing Society",
+    SOCIETY_NAME: "Future Exotica Co-operative Housing Society",
 
     GOOGLE_SHEET_ID: "1n5WrX_A1mXr_cUHzoGZaZ4rLEXF2676eyCaKRZvVaus",
 
