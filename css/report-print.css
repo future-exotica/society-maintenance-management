@@ -1,0 +1,9 @@
+/* Print styles for audit report */
+@media print {
+  /* hide sidebar and controls */
+  .sidebar, .topbar, .footer, .pagination, #refreshBtn, #searchText, #categoryFilter, #flatFilter, nav, .sidebar .nav-link, .btn { display: none !important; }
+  /* show only printable report area */
+  body * { visibility: hidden; }
+  .report-printable, .report-printable * { visibility: visible !important; }
+  .report-printable { position: absolute; left: 0; top: 0; width: 100%; padding: 10px; }
+}
