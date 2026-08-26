@@ -36,6 +36,38 @@ const Reports = {
         const totalDebit = data.reduce((s, r) => s + (Number(r.debit) || 0), 0);
         const balance = totalCredit - totalDebit;
 
+// credits by category and transaction type
+const creditsMap = {};
+
+data.forEach(r => {
+    const cat = String(r.category || 'Uncategorized').trim();
+    const txType = String(r.transactionType || 'Unknown').trim() || 'Unknown';
+    const c = Number(r.credit) || 0;
+
+    if (c > 0) {
+        const key = `${cat}||${txType}`;
+        creditsMap[key] = (creditsMap[key] || 0) + c;
+    }
+});
+
+const creditEntries = Object.keys(creditsMap).map(k => {
+    const parts = k.split('||');
+    return {
+        category: parts[0],
+        transactionType: parts[1],
+        amount: creditsMap[k]
+    };
+}).sort((a, b) => {
+    const c = a.category.localeCompare(b.category);
+    return c !== 0 ? c : a.transactionType.localeCompare(b.transactionType);
+});
+
+const totalCreditsReport = creditEntries.reduce(
+    (sum, e) => sum + e.amount,
+    0
+);
+
+
         // expenses by category and transaction type (consider debit entries)
         const expensesMap = {};
         data.forEach(r => {
@@ -84,6 +116,48 @@ const Reports = {
             </div>
         </div>`);
 
+
+// Credits table (category + transaction type)
+html.push(`<h5>Credits</h5>`);
+html.push(`<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Transaction Type</th>
+            <th class="text-end">Amount</th>
+        </tr>
+    </thead>
+    <tbody>`);
+
+if (creditEntries.length === 0) {
+    html.push(`<tr><td colspan="3">No credit entries</td></tr>`);
+} else {
+    creditEntries.forEach(e => {
+        html.push(`
+            <tr>
+                <td>${e.category}</td>
+                <td>${e.transactionType}</td>
+                <td class="text-end">${this.formatCurrency(e.amount)}</td>
+            </tr>
+        `);
+    });
+
+    html.push(`
+        <tr style="font-weight:700; border-top:2px solid #000;">
+            <td colspan="2">Total</td>
+            <td class="text-end">${this.formatCurrency(totalCreditsReport)}</td>
+        </tr>
+    `);
+}
+
+html.push(`</tbody></table>`);
+
+
+// spacing
+html.push(`<div style="height:18px"></div>`);
+
+
+
         // Expenses table (category + transaction type)
         html.push(`<h5>Expenses</h5>`);
         html.push(`<table class="table table-sm">
@@ -94,6 +168,19 @@ const Reports = {
             expenseEntries.forEach(e => {
                 html.push(`<tr><td>${e.category}</td><td>${e.transactionType}</td><td class="text-end">${this.formatCurrency(e.amount)}</td></tr>`);
             });
+
+ const totalExpensesReport = expenseEntries.reduce(
+        (sum, e) => sum + e.amount,
+        0
+    );
+
+    html.push(`
+        <tr style="font-weight:700; border-top:2px solid #000;">
+            <td colspan="2">Total</td>
+            <td class="text-end">${this.formatCurrency(totalExpensesReport)}</td>
+        </tr>
+    `);
+
         }
         html.push(`</tbody></table>`);
 
@@ -107,10 +194,19 @@ const Reports = {
         if (defaulters.length === 0) {
             html.push(`<tr><td colspan="6">No defaulters</td></tr>`);
         } else {
+	    let totalPending = 0;
             defaulters.forEach(d => {
                 const pending = (Number(d.expectedMaintenance || 0) - Number(d.credit || 0));
+		totalPending += pending;
                 html.push(`<tr><td>${d.flatNo || ''}</td><td>${d.ownerName || ''}</td><td>${d.month || ''}</td><td class="text-end">${this.formatCurrency(d.expectedMaintenance)}</td><td class="text-end">${this.formatCurrency(d.credit)}</td><td class="text-end">${this.formatCurrency(pending)}</td></tr>`);
             });
+
+html.push(`
+    <tr style="font-weight:700; border-top:2px solid #000;">
+        <td colspan="5">Total Pending</td>
+        <td class="text-end">${this.formatCurrency(totalPending)}</td>
+    </tr>
+`);
         }
         html.push(`</tbody></table>`);
 
