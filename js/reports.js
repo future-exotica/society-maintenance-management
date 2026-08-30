@@ -124,6 +124,7 @@ html.push(`<table class="table table-sm">
         <tr>
             <th>Category</th>
             <th>Transaction Type</th>
+			<th>Month</th>
             <th class="text-end">Amount</th>
         </tr>
     </thead>
@@ -137,6 +138,7 @@ if (creditEntries.length === 0) {
             <tr>
                 <td>${e.category}</td>
                 <td>${e.transactionType}</td>
+				<td>${e.month}</td>
                 <td class="text-end">${this.formatCurrency(e.amount)}</td>
             </tr>
         `);
@@ -161,12 +163,12 @@ html.push(`<div style="height:18px"></div>`);
         // Expenses table (category + transaction type)
         html.push(`<h5>Expenses</h5>`);
         html.push(`<table class="table table-sm">
-            <thead><tr><th>Category</th><th>Transaction Type</th><th class="text-end">Amount</th></tr></thead><tbody>`);
+            <thead><tr><th>Category</th><th>Transaction Type</th><th>Month</th><th class="text-end">Amount</th></tr></thead><tbody>`);
         if (expenseEntries.length === 0) {
             html.push(`<tr><td colspan="3">No expense entries</td></tr>`);
         } else {
             expenseEntries.forEach(e => {
-                html.push(`<tr><td>${e.category}</td><td>${e.transactionType}</td><td class="text-end">${this.formatCurrency(e.amount)}</td></tr>`);
+                html.push(`<tr><td>${e.category}</td><td>${e.transactionType}</td><td>${e.month}</td><td class="text-end">${this.formatCurrency(e.amount)}</td></tr>`);
             });
 
  const totalExpensesReport = expenseEntries.reduce(
