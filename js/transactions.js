@@ -50,8 +50,30 @@ const Transactions = {
         let html = '';
         html += `<li class="page-item ${this.currentPage === 1 ? 'disabled' : ''}"><a class="page-link" href="#" data-page="${this.currentPage - 1}">Previous</a></li>`;
 
-        for (let i = 1; i <= totalPages; i++) {
+        // Smart pagination: show current page ± 2, with ellipsis for gaps
+        const range = 2;
+        const start = Math.max(1, this.currentPage - range);
+        const end = Math.min(totalPages, this.currentPage + range);
+
+        // Add first page if not in range
+        if (start > 1) {
+            html += `<li class="page-item"><a class="page-link" href="#" data-page="1">1</a></li>`;
+            if (start > 2) {
+                html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+            }
+        }
+
+        // Add pages in range
+        for (let i = start; i <= end; i++) {
             html += `<li class="page-item ${i === this.currentPage ? 'active' : ''}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+        }
+
+        // Add last page if not in range
+        if (end < totalPages) {
+            if (end < totalPages - 1) {
+                html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+            }
+            html += `<li class="page-item"><a class="page-link" href="#" data-page="${totalPages}">${totalPages}</a></li>`;
         }
 
         html += `<li class="page-item ${this.currentPage === totalPages ? 'disabled' : ''}"><a class="page-link" href="#" data-page="${this.currentPage + 1}">Next</a></li>`;
