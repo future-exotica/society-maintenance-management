@@ -210,9 +210,6 @@ html.push(`
         }
         html.push(`</tbody></table>`);
 
-        // Footer with generated timestamp
-        html.push(`<div style="margin-top:12px; color:#666; font-size:12px;">Generated: ${new Date().toLocaleString()}</div>`);
-
         const container = document.getElementById('reportContent');
         if (container) container.innerHTML = html.join('');
 
