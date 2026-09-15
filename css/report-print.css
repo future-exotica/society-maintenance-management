@@ -1,9 +1,19 @@
 /* Print styles for audit report */
 @media print {
+  /* hide browser header/footer with date, time, and URL */
+  @page {
+    margin: 0.5in;
+    size: A4;
+  }
+  
   /* hide sidebar and controls */
   .sidebar, .topbar, .footer, .pagination, #refreshBtn, #searchText, #categoryFilter, #flatFilter, nav, .sidebar .nav-link, .btn { display: none !important; }
+  
   /* show only printable report area */
   body * { visibility: hidden; }
   .report-printable, .report-printable * { visibility: visible !important; }
-  .report-printable { position: absolute; left: 0; top: 0; width: 100%; padding: 10px; }
+  .report-printable { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
+  
+  /* remove margins and padding */
+  html, body { margin: 0; padding: 0; }
 }
