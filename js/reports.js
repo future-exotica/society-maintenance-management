@@ -98,7 +98,7 @@ const totalCreditsReport = creditEntries.reduce(
         html.push(`<div style="text-align:center; margin-bottom:10px;">
             ${hdrImg}
             <h3 style="margin:6px 0;">${CONFIG.SOCIETY_NAME || ''}</h3>
-            <div style="color:#666; font-size:14px;">Audit Report - ${selectedMonth || 'All'}</div>
+            <div style="color:#666; font-size:14px;">Income & Expenditure Statement${selectedMonth && selectedMonth !== 'All' ? ` - ${selectedMonth}` : ''}</div>
         </div>`);
 
         html.push(`<div style="margin-bottom:12px; display:flex; gap:20px; flex-wrap:wrap;">
